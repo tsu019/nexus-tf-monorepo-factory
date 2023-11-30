@@ -1,0 +1,13 @@
+resource "tfe_workspace" "tf-workspace-$INDEX" {
+  name              = "$PROJECT-$INDEX"
+  organization      = data.tfe_organization.org.name
+  working_directory = "./$PROJECT-$INDEX"
+  trigger_patterns  = ["./$PROJECT-$INDEX/*"]
+  auto_apply        = true
+
+  vcs_repo {
+    identifier     = var.GITHUB_REPO_IDENTIFIER
+    oauth_token_id = data.tfe_oauth_client.oauth-client.oauth_token_id
+  }
+}
+
